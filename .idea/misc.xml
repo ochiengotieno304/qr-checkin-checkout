@@ -5,7 +5,7 @@
       <map>
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.21640625" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1765625" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17604166666666668" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/content_login.xml" value="0.1765625" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.1765625" />
       </map>
