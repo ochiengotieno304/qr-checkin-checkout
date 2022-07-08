@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         val qrButton: Button = findViewById(R.id.qr_button)
         qrButton.setOnClickListener {
             val intentIntegrator = IntentIntegrator(this)
-            intentIntegrator.setDesiredBarcodeFormats(listOf(IntentIntegrator.QR_CODE))
+            intentIntegrator.setDesiredBarcodeFormats(listOf(IntentIntegrator.ALL_CODE_TYPES))
             intentIntegrator.initiateScan()
         }
     }
@@ -42,4 +42,8 @@ class MainActivity : AppCompatActivity() {
                 .show()
         }
     }
+}
+
+private fun IntentIntegrator.setDesiredBarcodeFormats(listOf: List<MutableCollection<String>>) {
+
 }

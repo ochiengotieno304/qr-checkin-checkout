@@ -54,4 +54,5 @@
     </string>
     <string name="tap_to_scan">Tap to scan</string>
     <string name="scan">Scan</string>
+    <string name="create_account">+ CREATE ACCOUNT</string>
 </resources>
