@@ -7,12 +7,12 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface MyService {
-    @POST("https://auth-endpoints.herokuapp.com/users")
+    @POST("/users")
     @FormUrlEncoded
     Observable<String> registerUser(@Field("username") String username,
                                     @Field("password") String password);
 
-    @POST("https://auth-endpoints.herokuapp.com/auth/login")
+    @POST("/login")
     @FormUrlEncoded
     Observable<String> loginUser(@Field("username") String username,
                                  @Field("password") String password);
