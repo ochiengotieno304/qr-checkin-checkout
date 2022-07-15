@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QrScan</string>
+    <string name="app_name">Yulu</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -63,4 +63,5 @@
     <string name="info_yuluhq_com">info@yuluhq.com</string>
     <string name="nav_drawer_open">open nav</string>
     <string name="nav_drawer_close">close nav</string>
+    <string name="yulu_logo">yulu logo</string>
 </resources>

@@ -5,12 +5,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_check_in"
-            android:icon="@drawable/ic_check_in"
+            android:icon="@drawable/login"
             android:title="@string/check_in" />
 
         <item
             android:id="@+id/nav_check_out"
-            android:icon="@drawable/ic_check_out"
+            android:icon="@drawable/logout"
             android:title="@string/check_out" />
     </group>
 
@@ -22,5 +22,4 @@
                 android:title="@string/history" />
         </menu>
     </item>
-
 </menu>

@@ -6,11 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.zxing.integration.android.IntentIntegrator
+import com.journeyapps.barcodescanner.CaptureActivity
 import kotlinx.android.synthetic.main.fragment_check_in.*
 import kotlinx.android.synthetic.main.fragment_check_in.view.*
 
@@ -39,7 +38,15 @@ class CheckInFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(resultCode, data)
         if (result != null) {
-            Toast.makeText(this@CheckInFragment.requireActivity(), "saving", Toast.LENGTH_SHORT)
+            MaterialAlertDialogBuilder(this@CheckInFragment.requireActivity())
+                .setMessage("Would you like to go to ${result.contents}?")
+                .setPositiveButton("Yes") { _, _ ->
+                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                    intent.putExtra(SearchManager.QUERY, result.contents)
+                    startActivity(intent)
+                }
+                .setNegativeButton("No") { _, _ -> }
+                .create()
                 .show()
         }
     }
