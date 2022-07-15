@@ -1,13 +1,16 @@
 package com.example.qrscan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.qrscan.Retrofit.MyService;
@@ -17,9 +20,11 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     Button buttonSignIn;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-    MyService myService;
 
     @Override
     protected void onStop() {
@@ -41,10 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        // init service
-        Retrofit retrofitClient = RetrofitClient.getInstance();
-        myService = retrofitClient.create(MyService.class);
 
         // init view
         editTextRegNumber = findViewById(R.id.text_input_username);
@@ -84,11 +84,24 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    Retrofit retrofitClient = RetrofitClient.getInstance();
+    MyService myService = retrofitClient.create(MyService.class);
+
     private void registerUser(String username, String password) {
-        compositeDisposable.add(myService.registerUser(username, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show()));
+        Call<ResponseBody> call = myService.registerUser(username, password);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                Toast.makeText(LoginActivity.this, "code: " + response.code(), Toast.LENGTH_LONG).show();
+                Log.d("response", response.message());
+                Log.d("response", String.valueOf(response.isSuccessful()));
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(LoginActivity.this, "" + t, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loginUser(String username, String password) {
@@ -102,10 +115,22 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        compositeDisposable.add(myService.loginUser(username, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(response -> Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show()));
+        Call<ResponseBody> call = myService.loginUser(username, password);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "sign in successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else if (response.code() == 401) {
+                    Toast.makeText(LoginActivity.this, "invalid credentials", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(LoginActivity.this, "" + t, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

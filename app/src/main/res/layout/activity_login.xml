@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/qrcode" />
+                android:src="@drawable/purple"
+                android:contentDescription="@string/login_page_header_background" />
 
             <TextView
                 android:id="@+id/text_create_account"
@@ -31,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/create_account"
-                android:textColor="@android:color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
         </FrameLayout>
 
