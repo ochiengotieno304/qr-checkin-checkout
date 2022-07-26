@@ -22,6 +22,7 @@
                 android:title="@string/history" />
             <item
                 android:id="@+id/logout"
+                android:icon="@drawable/ic_close"
                 android:title="@string/logout" />
         </menu>
     </item>

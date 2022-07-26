@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -103,9 +102,19 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                Toast.makeText(LoginActivity.this, "code: " + response.code(), Toast.LENGTH_LONG).show();
-                Log.d("response", response.message());
-                Log.d("response", String.valueOf(response.isSuccessful()));
+                if (response.isSuccessful()) {
+                    Toast.makeText(LoginActivity.this, "signup successful", Toast.LENGTH_SHORT).show();
+
+                    // save user info
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.apply();
+
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else if (response.code() == 401) {
+                    Toast.makeText(LoginActivity.this, "invalid credentials", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
