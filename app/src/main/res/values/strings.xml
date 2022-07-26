@@ -65,4 +65,5 @@
     <string name="nav_drawer_close">close nav</string>
     <string name="yulu_logo">yulu logo</string>
     <string name="login_page_header_background">Login page header background</string>
+    <string name="logout">Logout</string>
 </resources>

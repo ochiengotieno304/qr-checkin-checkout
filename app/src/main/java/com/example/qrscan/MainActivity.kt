@@ -2,6 +2,7 @@ package com.example.qrscan
 
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
@@ -76,6 +77,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.history -> {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, historyFragment).commit()
+            }
+            R.id.logout -> {
+                val sharedPreferences: SharedPreferences =
+                    applicationContext.getSharedPreferences("LoggedInUserPrefs", Context.MODE_PRIVATE)
+                applicationContext.deleteSharedPreferences("LoggedInUSerPrefs")
+
+                sharedPreferences.edit().remove("username").apply()
+                sharedPreferences.edit().remove("password").apply()
+                // redirect to login page
+                startActivity(Intent(this, LoginActivity::class.java))
             }
         }
         drawer.closeDrawer(GravityCompat.START)

@@ -9,8 +9,8 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val sharedPreferences = getSharedPreferences("LoggedInUserPrefs", MODE_PRIVATE)
-        val username = sharedPreferences.getString("username", "")
-        val password = sharedPreferences.getString("password", "")
+        val username = sharedPreferences.getString("username", null)
+        val password = sharedPreferences.getString("password", null)
         if (username != null && password != null) {
             startActivity(Intent(this, MainActivity::class.java))
         } else {
