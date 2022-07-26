@@ -1,6 +1,8 @@
 package com.example.qrscan;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView createAccountTextView;
     TextInputEditText editTextPassword, editTextRegNumber;
     Button buttonSignIn;
+    SharedPreferences sharedPreferences;
+    String username;
+    String password;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -46,12 +51,23 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // init prefs
+        sharedPreferences = getSharedPreferences("LoggedInUserPrefs", Context.MODE_PRIVATE);
+
         // init view
         editTextRegNumber = findViewById(R.id.text_input_username);
         editTextPassword = findViewById(R.id.text_input_password);
         buttonSignIn = findViewById(R.id.button_sign_in);
-        buttonSignIn.setOnClickListener(v -> loginUser(Objects.requireNonNull(editTextRegNumber.getText()).toString(),
-                Objects.requireNonNull(editTextPassword.getText()).toString()));
+        buttonSignIn.setOnClickListener(v -> {
+            username = Objects.requireNonNull(editTextRegNumber.getText()).toString();
+            password = Objects.requireNonNull(editTextPassword.getText()).toString();
+            loginUser(username, password);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("username", username);
+            editor.putString("password", password);
+            editor.apply();
+        });
 
         createAccountTextView = findViewById(R.id.text_create_account);
         createAccountTextView.setOnClickListener(v -> {

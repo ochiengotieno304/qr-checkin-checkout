@@ -1,18 +1,14 @@
 package com.example.qrscan
 
-import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_check_out.*
-import kotlinx.android.synthetic.main.fragment_check_out.view.*
 
 
 class CheckOutFragment : Fragment() {

@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.zxing.integration.android.IntentIntegrator
-import com.journeyapps.barcodescanner.CaptureActivity
 import kotlinx.android.synthetic.main.fragment_check_in.*
-import kotlinx.android.synthetic.main.fragment_check_in.view.*
 
 
 class CheckInFragment : Fragment() {

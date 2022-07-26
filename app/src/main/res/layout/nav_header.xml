@@ -22,6 +22,7 @@
         android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
     <TextView
+        android:id="@+id/text_view_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/info_yuluhq_com" />

@@ -1,8 +1,12 @@
 package com.example.qrscan
 
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -11,9 +15,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    lateinit var drawer: DrawerLayout
-    lateinit var toolbar: Toolbar
-    lateinit var navigationView: NavigationView
+    private lateinit var drawer: DrawerLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var navigationView: NavigationView
     private var checkInFragment = CheckInFragment()
     private var checkOutFragment = CheckOutFragment()
     private var historyFragment = HistoryFragment()
@@ -35,19 +39,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
+        val headerView : View = navigationView.getHeaderView(0)
+        val navUsername: TextView = headerView.findViewById(R.id.text_view_username)
+        val sharedPreferences: SharedPreferences =
+            applicationContext.getSharedPreferences("LoggedInUserPrefs", Context.MODE_PRIVATE)
+
+        val username = sharedPreferences.getString("username", "")
+        navUsername.text = username
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, checkInFragment).commit()
             navigationView.setCheckedItem(R.id.nav_check_in)
         }
-
-
-//        val qrButton: Button = findViewById(R.id.qr_button)
-//        qrButton.setOnClickListener {
-//            val intentIntegrator = IntentIntegrator(this)
-//            setDesiredBarcodeFormats()
-//            intentIntegrator.initiateScan()
-//        }
     }
 
     @Override
@@ -77,27 +81,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
-
-//    @Deprecated("Deprecated in Java")
-//    @Suppress("DEPRECATION")
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        val result = IntentIntegrator.parseActivityResult(resultCode, data)
-//        if (result != null) {
-//            MaterialAlertDialogBuilder(this)
-//                .setMessage("Would you like to go to ${result.contents}?")
-//                .setPositiveButton("Yes") { _, _ ->
-//                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
-//                    intent.putExtra(SearchManager.QUERY, result.contents)
-//                    startActivity(intent)
-//                }
-//                .setNegativeButton("No") { _, _ -> }
-//                .create()
-//                .show()
-//        }
-//    }
 }
-
-//private fun setDesiredBarcodeFormats() {
-//
-//}
