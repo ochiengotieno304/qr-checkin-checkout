@@ -62,11 +62,6 @@ public class LoginActivity extends AppCompatActivity {
             username = Objects.requireNonNull(editTextRegNumber.getText()).toString();
             password = Objects.requireNonNull(editTextPassword.getText()).toString();
             loginUser(username, password);
-
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username", username);
-            editor.putString("password", password);
-            editor.apply();
         });
 
         createAccountTextView = findViewById(R.id.text_create_account);
@@ -137,6 +132,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "sign in successful", Toast.LENGTH_SHORT).show();
+
+                    // save user info
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.apply();
+
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else if (response.code() == 401) {
                     Toast.makeText(LoginActivity.this, "invalid credentials", Toast.LENGTH_SHORT).show();
