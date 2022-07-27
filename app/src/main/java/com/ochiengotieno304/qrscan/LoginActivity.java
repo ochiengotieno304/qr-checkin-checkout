@@ -1,10 +1,11 @@
-package com.example.qrscan;
+package com.ochiengotieno304.qrscan;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +15,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.qrscan.Retrofit.MyService;
-import com.example.qrscan.Retrofit.RetrofitClient;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.ochiengotieno304.qrscan.Retrofit.MyService;
+import com.ochiengotieno304.qrscan.Retrofit.RetrofitClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.Objects;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -36,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String username;
     String password;
+    String token;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -140,12 +146,23 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
+
+                    try {
+                        assert response.body() != null;
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        token = jsonObject.getString("token");
+                        Log.i("Token", token);
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+
                     Toast.makeText(LoginActivity.this, "sign in successful", Toast.LENGTH_SHORT).show();
 
                     // save user info
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("username", username);
                     editor.putString("password", password);
+                    editor.putString("token", token);
                     editor.apply();
 
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));

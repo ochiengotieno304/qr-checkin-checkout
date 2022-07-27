@@ -1,4 +1,4 @@
-package com.example.qrscan
+package com.ochiengotieno304.qrscan
 
 
 import android.content.Context
@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.add
+import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -67,8 +69,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_check_in -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, checkInFragment).commit()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add<CheckInFragment>(R.id.fragment_container)
+                }
             }
             R.id.nav_check_out -> {
                 supportFragmentManager.beginTransaction()

@@ -1,4 +1,4 @@
-package com.example.qrscan
+package com.ochiengotieno304.qrscan
 
 import org.junit.Test
 

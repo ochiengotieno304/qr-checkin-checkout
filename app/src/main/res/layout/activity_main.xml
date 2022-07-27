@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity"
+    tools:context="com.ochiengotieno304.qrscan.MainActivity"
     tools:openDrawer="start">
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:popupTheme="@style/ThemeOverlay.Material3.Light"
             android:theme="@style/ThemeOverlay.Material3.Dark" />
 
-        <FrameLayout
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

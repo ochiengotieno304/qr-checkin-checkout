@@ -1,4 +1,4 @@
-package com.example.qrscan
+package com.ochiengotieno304.qrscan
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

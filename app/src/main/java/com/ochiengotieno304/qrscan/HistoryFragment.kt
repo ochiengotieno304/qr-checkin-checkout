@@ -1,4 +1,4 @@
-package com.example.qrscan
+package com.ochiengotieno304.qrscan
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-class HistoryFragment: Fragment() {
+class HistoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
