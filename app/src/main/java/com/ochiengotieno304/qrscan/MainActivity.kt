@@ -89,8 +89,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 sharedPreferences.edit().remove("username").apply()
                 sharedPreferences.edit().remove("password").apply()
+                Intent.FLAG_ACTIVITY_CLEAR_TASK
                 // redirect to login page
-                startActivity(Intent(this, LoginActivity::class.java))
+                val mIntent = Intent(this, LoginActivity::class.java)
+                finishAffinity()
+                startActivity(mIntent)
             }
         }
         drawer.closeDrawer(GravityCompat.START)

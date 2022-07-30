@@ -16,6 +16,7 @@ import com.ochiengotieno304.qrscan.Retrofit.MyService
 import com.ochiengotieno304.qrscan.Retrofit.RetrofitClient
 import kotlinx.android.synthetic.main.fragment_check_out.*
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -62,7 +63,10 @@ class CheckOutFragment : Fragment() {
         call.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(activity, "check out successful", Toast.LENGTH_SHORT)
+                    val jsonObject = JSONObject(response.body()!!.string())
+                    val responseMessage = jsonObject.getString("message")
+
+                    Toast.makeText(activity, responseMessage, Toast.LENGTH_SHORT)
                         .show()
                 } else if (response.code() == 401) {
                     Log.i("request", call.request().toString())

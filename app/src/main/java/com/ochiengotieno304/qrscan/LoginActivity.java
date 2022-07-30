@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView createAccountTextView;
     TextInputEditText editTextPassword, editTextRegNumber;
     Button buttonSignIn;
+    ProgressBar progressBar;
     SharedPreferences sharedPreferences;
     String username;
     String password;
@@ -58,6 +60,10 @@ public class LoginActivity extends AppCompatActivity {
 
         // init prefs
         sharedPreferences = getSharedPreferences("LoggedInUserPrefs", Context.MODE_PRIVATE);
+
+        // init progress bar
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         // init view
         editTextRegNumber = findViewById(R.id.text_input_username);
@@ -140,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
+        progressBar.setVisibility(View.VISIBLE);
 
         Call<ResponseBody> call = myService.loginUser(username, password);
         call.enqueue(new Callback<ResponseBody>() {
@@ -167,13 +174,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else if (response.code() == 401) {
-                    Toast.makeText(LoginActivity.this, "invalid credentials", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "invalid credentials", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Toast.makeText(LoginActivity.this, "" + t, Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "check your internet connection", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

@@ -11,12 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.ochiengotieno304.qrscan.R
+import com.google.zxing.integration.android.IntentIntegrator
 import com.ochiengotieno304.qrscan.Retrofit.MyService
 import com.ochiengotieno304.qrscan.Retrofit.RetrofitClient
-import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_check_in.*
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,7 +63,10 @@ class CheckInFragment : Fragment() {
         call.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(activity, "check in successful", Toast.LENGTH_SHORT)
+                    val jsonObject = JSONObject(response.body()!!.string())
+                    val responseMessage = jsonObject.getString("message")
+
+                    Toast.makeText(activity, responseMessage, Toast.LENGTH_SHORT)
                         .show()
                 } else if (response.code() == 401) {
                     Log.i("request", call.request().toString())
