@@ -8,7 +8,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
-public interface MyService {
+public interface IMyService {
     @POST("users")
     @FormUrlEncoded
     Call<ResponseBody> registerUser(@Field("username") String username,

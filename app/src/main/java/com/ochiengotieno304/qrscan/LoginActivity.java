@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.ochiengotieno304.qrscan.Retrofit.MyService;
+import com.ochiengotieno304.qrscan.Retrofit.IMyService;
 import com.ochiengotieno304.qrscan.Retrofit.RetrofitClient;
 
 import org.json.JSONException;
@@ -107,10 +107,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     Retrofit retrofitClient = RetrofitClient.getInstance();
-    MyService myService = retrofitClient.create(MyService.class);
+    IMyService IMyService = retrofitClient.create(IMyService.class);
 
     private void registerUser(String username, String password) {
-        Call<ResponseBody> call = myService.registerUser(username, password);
+        Call<ResponseBody> call = IMyService.registerUser(username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<ResponseBody> call = myService.loginUser(username, password);
+        Call<ResponseBody> call = IMyService.loginUser(username, password);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

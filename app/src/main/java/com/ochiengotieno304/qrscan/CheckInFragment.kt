@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.google.zxing.integration.android.IntentIntegrator
-import com.ochiengotieno304.qrscan.Retrofit.MyService
+import com.ochiengotieno304.qrscan.Retrofit.IMyService
 import com.ochiengotieno304.qrscan.Retrofit.RetrofitClient
 import kotlinx.android.synthetic.main.fragment_check_in.*
 import okhttp3.ResponseBody
@@ -56,7 +56,8 @@ class CheckInFragment : Fragment() {
         }
 
     private var retrofitClient: Retrofit = RetrofitClient.getInstance()
-    private var myService: MyService = retrofitClient.create(MyService::class.java)
+    private var myService: IMyService = retrofitClient.create(
+        IMyService::class.java)
 
     private fun checkIn(token: String) {
         val call: Call<ResponseBody> = myService.checkIn(token)
