@@ -37,7 +37,7 @@ class CheckOutFragment : Fragment() {
         qr_button.setOnClickListener {
             val intentIntegrator = IntentIntegrator(this@CheckOutFragment.requireActivity())
             intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
-            intentIntegrator.setOrientationLocked(true)
+            intentIntegrator.setOrientationLocked(false)
             resultLauncher.launch(intentIntegrator.createScanIntent())
         }
     }

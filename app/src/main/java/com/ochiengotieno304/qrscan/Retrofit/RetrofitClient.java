@@ -9,7 +9,7 @@ public class RetrofitClient {
     public static Retrofit getInstance() {
         if (instance == null) {
             instance = new Retrofit.Builder()
-                    .baseUrl("https://yulu-api.herokuapp.com/")
+                    .baseUrl("https://yulu.onrender.com/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
